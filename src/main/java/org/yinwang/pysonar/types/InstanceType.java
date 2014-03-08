@@ -37,9 +37,7 @@ public class InstanceType extends Type {
         if (other instanceof InstanceType) {
             InstanceType iother = (InstanceType) other;
             // for now ignore the case where an instance of the same class is modified
-            if (classType.equals(iother.classType) &&
-                    table.keySet().equals(iother.table.keySet()))
-            {
+            if (classType.equals(iother.classType)) {
                 return true;
             }
         }

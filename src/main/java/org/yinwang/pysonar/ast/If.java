@@ -1,7 +1,9 @@
 package org.yinwang.pysonar.ast;
 
 import org.jetbrains.annotations.NotNull;
+import org.yinwang.pysonar.Analyzer;
 import org.yinwang.pysonar.State;
+import org.yinwang.pysonar._;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
 
@@ -12,6 +14,8 @@ public class If extends Node {
     public Node test;
     public Node body;
     public Node orelse;
+
+    public static int asBoolCount = 1;
 
 
     public If(@NotNull Node test, Node body, Node orelse, String file, int start, int end) {
@@ -31,7 +35,11 @@ public class If extends Node {
         State s2 = s.copy();
 
         // ignore condition for now
-        transformExpr(test, s);
+        Type tt = transformExpr(test, s);
+        if (Type.contains(tt, Analyzer.self.builtins.Datetime_time)) {
+            _.msg("===" + asBoolCount + "=== date time used as condition: " + this.file + ": " + toString());
+            asBoolCount++;
+        }
 
         if (body != null) {
             type1 = transformExpr(body, s1);

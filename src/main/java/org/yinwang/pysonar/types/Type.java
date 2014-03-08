@@ -52,6 +52,20 @@ public abstract class Type {
     }
 
 
+    public static boolean contains(Type a, Type b) {
+        if (b instanceof ClassType) {
+            b = ((ClassType) b).getCanon();
+        }
+
+        if (a instanceof UnionType) {
+            UnionType ua = (UnionType) a;
+            return ua.types.contains(b);
+        } else {
+            return a.equals(b);
+        }
+    }
+
+
     @NotNull
     public ModuleType asModuleType() {
         if (this instanceof UnionType) {
