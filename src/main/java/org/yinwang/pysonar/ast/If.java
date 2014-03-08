@@ -44,8 +44,20 @@ public class If extends Node {
             if (!dateTimeBool.contains(loc)) {
                 dateTimeBool.add(loc);
                 _.msg("\n*** [WARNING " + dateTimeBool.size() + "] datetime.time used as boolean! \n" +
-                        "\tfile: " + this.file +
-                        "\n\tcharacter offset: " + test.start + "\n");
+                        "- file: " + this.file +
+                        "\n- character offset: " + test.start + "\n");
+//                _.msg("- call stack: ");
+//                int count = 0;
+//                for (Object o : Analyzer.self.callStack) {
+//                    if (o instanceof Call) {
+//                        Call call = (Call) o;
+//                        _.msg(call.func.name + " @ " + call.file + ":" + call.start);
+//                    }
+//                    count++;
+//                    if (count == 10) {
+//                        break;
+//                    }
+//                }
             }
         }
 

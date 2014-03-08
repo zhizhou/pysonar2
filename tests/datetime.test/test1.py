@@ -1,7 +1,7 @@
 import datetime
 
 def foo(x):
-    if x:
+    if 42 and not x:
         print 'yes'
     else:
         print 'no'

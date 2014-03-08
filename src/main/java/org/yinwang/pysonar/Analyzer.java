@@ -34,7 +34,7 @@ public class Analyzer {
     public boolean multilineFunType = false;
     public List<String> path = new ArrayList<>();
     private Set<FunType> uncalled = new HashSet<>();
-    private Set<Object> callStack = new HashSet<>();
+    public Set<Object> callStack = new HashSet<>();
     private Set<Object> importStack = new HashSet<>();
 
     private AstCache astCache;
