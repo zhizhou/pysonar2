@@ -7,6 +7,9 @@ import org.yinwang.pysonar._;
 import org.yinwang.pysonar.types.Type;
 import org.yinwang.pysonar.types.UnionType;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class If extends Node {
 
@@ -15,7 +18,7 @@ public class If extends Node {
     public Node body;
     public Node orelse;
 
-    public static int asBoolCount = 1;
+    public static Set<String> dateTimeBool = new HashSet<>();
 
 
     public If(@NotNull Node test, Node body, Node orelse, String file, int start, int end) {
@@ -37,8 +40,13 @@ public class If extends Node {
         // ignore condition for now
         Type tt = transformExpr(test, s);
         if (Type.contains(tt, Analyzer.self.builtins.Datetime_time)) {
-            _.msg("===" + asBoolCount + "=== date time used as condition: " + this.file + ": " + toString());
-            asBoolCount++;
+            String loc = this.file + ": " + test.start;
+            if (!dateTimeBool.contains(loc)) {
+                dateTimeBool.add(loc);
+                _.msg("\n*** [WARNING " + dateTimeBool.size() + "] datetime.time used as boolean! \n" +
+                        "\tfile: " + this.file +
+                        "\n\tcharacter offset: " + test.start + "\n");
+            }
         }
 
         if (body != null) {
